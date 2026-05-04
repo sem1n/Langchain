@@ -1,6 +1,6 @@
 import bs4
 import logging
-from langchain import hub
+from langchain_classic import hub
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import FAISS
