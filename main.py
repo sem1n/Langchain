@@ -134,9 +134,9 @@ def main():
 
     args = parser.parse_args()
 
-    print(f"[*] 문서 로드 중")
-    print(f"    - source_type: {args.source_type}")
-    print(f"    - source: {args.source}")
+    print(f"문서 로드 중")
+    print(f"  - source_type: {args.source_type}")
+    print(f"  - source: {args.source}")
 
     docs = load_documents(
         source=args.source,
@@ -144,10 +144,10 @@ def main():
     )
 
     if not docs:
-        print("[!] 문서를 불러오지 못했습니다. URL 또는 파일 경로를 확인하세요.")
+        print("문서를 불러오지 못했습니다. URL 또는 파일 경로를 확인하세요.")
         return
 
-    print(f"[*] 문서 로드 완료: {len(docs)}개")
+    print(f"문서 로드 완료: {len(docs)}개")
 
     splits = split_documents(
         docs,
@@ -157,16 +157,16 @@ def main():
     )
 
     if not splits:
-        print("[!] 문서 분할 결과가 없습니다.")
+        print("문서 분할 결과가 없습니다.")
         return
 
-    print(f"[*] 문서 분할 완료: {len(splits)} 청크")
-    print(f"    - splitter: {args.splitter}")
-    print(f"    - chunk_size: {args.chunk_size}")
-    print(f"    - chunk_overlap: {args.chunk_overlap}")
+    print(f"문서 분할 완료: {len(splits)} 청크")
+    print(f"  - splitter: {args.splitter}")
+    print(f"  - chunk_size: {args.chunk_size}")
+    print(f"  - chunk_overlap: {args.chunk_overlap}")
 
     embeddings = create_embeddings()
-    print(f"[*] 임베딩 모델 생성 완료: {os.getenv('EMBEDDING_MODE', 'fastembed')}")
+    print(f"임베딩 모델 생성 완료: {os.getenv('EMBEDDING_MODE', 'fastembed')}")
 
     vectorstore = create_vectorstore(
         splits=splits,
@@ -175,10 +175,10 @@ def main():
         persist_directory=args.persist_dir,
     )
 
-    print(f"[*] 벡터스토어 생성 완료: {args.vectorstore}")
+    print(f"벡터스토어 생성 완료: {args.vectorstore}")
 
     llm = create_llm()
-    print(f"[*] LLM 생성 완료: {os.getenv('MODEL_NAME')}")
+    print(f"LLM 생성 완료: {os.getenv('MODEL_NAME')}")
 
     retriever = create_retriever(
         vectorstore=vectorstore,
@@ -193,10 +193,10 @@ def main():
         faiss_weight=retriever_cfg["faiss_weight"],
     )
 
-    print(f"[*] Retriever 생성 완료: {args.retriever}")
+    print(f"Retriever 생성 완료: {args.retriever}")
 
     if args.show_sources:
-        print("\n[검색된 문서 청크 미리보기]")
+        print("\n검색된 문서 청크 미리보기")
         print("-" * 50)
         retrieved_docs = retriever.invoke(args.question)
         preview_docs(retrieved_docs)
@@ -207,15 +207,15 @@ def main():
         prompt_mode=args.prompt_mode,
     )
 
-    print(f"\n[질문]: {args.question}")
+    print(f"\n질문: {args.question}")
     print("-" * 50)
 
     try:
         response = rag_chain.invoke(args.question)
-        print(f"[답변]\n{response}")
+        print(f"답변\n{response}")
 
     except Exception as e:
-        print(f"[!] 오류 발생: {e}")
+        print(f"오류 발생: {e}")
 
 if __name__ == "__main__":
     main()
