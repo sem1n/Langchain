@@ -216,12 +216,6 @@ def main():
 
     except Exception as e:
         print(f"[!] 오류 발생: {e}")
-        print("\n확인할 것:")
-        print("1. .env의 MODEL_NAME, BASE_URL, TOKEN 값이 맞는지 확인")
-        print("2. BASE_URL이 OpenAI-compatible 형식인지 확인")
-        print("3. TOKEN이 만료되지 않았는지 확인")
-        print("4. 패키지를 현재 실행 중인 Python 환경에 설치했는지 확인")
-
 
 if __name__ == "__main__":
     main()
